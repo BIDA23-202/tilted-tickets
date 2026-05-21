@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tilted Tickets | Botswana's Smartest Way to Event</title>
+  <meta property="og:title" content="Tilted Tickets | Botswana's Smartest Way to Event" />
+  <meta property="og:description" content="Find concerts, campus expos, theatre, sport and business events across Botswana. Buy tickets, get QR entry, and keep every pass in one dashboard." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&h=630&fit=crop&q=80" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text y='.9em' font-size='60' x='12' fill='white' font-weight='900'>TT</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar glass">
+      <a href="#home" class="brand nav-link" data-route="home">
+        <span class="logo">TT</span>
+        <span>
+          <strong>Tilted Tickets</strong>
+          <small>Botswana's Smartest Way to Event</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="#home" class="nav-link" data-route="home">Home</a>
+        <a href="#events" class="nav-link" data-route="events">Events</a>
+        <a href="#about" class="nav-link" data-route="about">About</a>
+        <a href="#customer-dashboard" class="nav-link" data-route="customer-dashboard">My Account</a>
+        <a href="#organizer-dashboard" class="nav-link" data-route="organizer-dashboard">Organizer</a>
+      </nav>
+      <div class="topbar-actions">
+        <button id="darkToggle" class="btn btn-ghost">Dark</button>
+        <button id="authAction" class="btn btn-primary">Login</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="view active">
+        <div class="hero card hero-card">
+          <div>
+            <span class="pill">Live in Botswana</span>
+            <h1>Botswana's Smartest Way to Event</h1>
+            <p>Find concerts, campus expos, theatre, sport and business events in one place. Buy tickets, get QR entry, and keep every pass in one dashboard.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" data-route-btn="events">Browse events</button>
+              <button class="btn btn-secondary" data-route-btn="organizer-portal">Sell tickets</button>
+            </div>
+            <div class="trust-row">
+              <span>Secure checkout</span>
+              <span>QR entry</span>
+              <span>Instant confirmation</span>
+            </div>
+          </div>
+          <div class="hero-side">
+            <div class="mini-stats">
+              <div class="stat-box"><strong id="heroEvents">10</strong><span>Active events</span></div>
+              <div class="stat-box"><strong id="heroCities">5</strong><span>Cities covered</span></div>
+              <div class="stat-box"><strong id="heroSold">0</strong><span>Tickets sold</span></div>
+            </div>
+            <div class="search-panel card inset">
+              <div class="grid cols-2">
+                <input id="homeSearch" type="text" placeholder="Search events, venue or city" />
+                <select id="homeCategory"><option value="">All categories</option></select>
+                <select id="homeCity"><option value="">All cities</option></select>
+                <select id="homePrice">
+                  <option value="">Any price</option>
+                  <option value="low">Under BWP 200</option>
+                  <option value="mid">BWP 200 - 400</option>
+                  <option value="high">BWP 400+</option>
+                </select>
+              </div>
+              <button id="homeFilterBtn" class="btn btn-primary wide">Find events</button>
+            </div>
+          </div>
+        </div>
+        <div class="how-it-works card">
+          <div class="section-header"><h2>How Tilted Tickets works</h2><span class="muted">Three steps for buyers. One dashboard for organisers.</span></div>
+          <div class="grid cols-3 how-steps">
+            <div class="step-box"><span class="step-num">01</span><strong>Find your event</strong><p>Browse 14+ Botswana events by city, category, date or price. Every listing shows real venue details and ticket availability live.</p></div>
+            <div class="step-box"><span class="step-num">02</span><strong>Pay with local methods</strong><p>Choose Orange Money, MyZaka, bank card or cash deposit reference. No foreign card required. Checkout takes under 2 minutes.</p></div>
+            <div class="step-box"><span class="step-num">03</span><strong>Show your QR at the gate</strong><p>Each ticket has a unique QR code that gets checked in once and marked used. Screenshots do not work at Tilted Tickets gates.</p></div>
+          </div>
+        </div>
+        <div class="section-header"><h2>Featured events</h2><button class="text-btn" data-route-btn="events">See all</button></div>
+        <div id="featuredEvents" class="card-grid"></div>
+        <div class="grid cols-3 home-bands">
+          <div>
+            <div class="section-header"><h3>Trending now</h3></div>
+            <div id="trendingEvents" class="stack"></div>
+          </div>
+          <div>
+            <div class="section-header"><h3>Happening this weekend</h3></div>
+            <div id="weekendEvents" class="stack"></div>
+          </div>
+          <div>
+            <div class="section-header"><h3>Campus events</h3></div>
+            <div id="campusEvents" class="stack"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="events" class="view">
+        <div class="section-header"><h2>Discover events</h2><span class="muted">Filter by category, city, date and price.</span></div>
+        <div class="toolbar card">
+          <input id="searchInput" type="text" placeholder="Search title, venue, city" />
+          <select id="categoryFilter"><option value="">All categories</option></select>
+          <select id="cityFilter"><option value="">All cities</option></select>
+          <select id="dateFilter"><option value="">Any date</option><option value="weekend">This weekend</option><option value="month">This month</option></select>
+          <select id="priceFilter">
+            <option value="">Any price</option>
+            <option value="low">Under BWP 200</option>
+            <option value="mid">BWP 200 - 400</option>
+            <option value="high">BWP 400+</option>
+          </select>
+          <button id="clearFilters" class="btn btn-ghost">Clear</button>
+        </div>
+        <div id="eventsGrid" class="card-grid"></div>
+      </section>
+
+      <section id="event-detail" class="view">
+        <div id="eventDetailContainer"></div>
+      </section>
+
+      <section id="checkout-1" class="view checkout-view">
+        <div class="checkout-steps"><span class="active">1 Ticket details</span><span>2 Payment</span><span>3 Confirmation</span></div>
+        <div class="grid cols-2 checkout-layout">
+          <div class="card" id="checkout1Form"></div>
+          <div class="card" id="checkoutSummary1"></div>
+        </div>
+      </section>
+
+      <section id="checkout-2" class="view checkout-view">
+        <div class="checkout-steps"><span>1 Ticket details</span><span class="active">2 Payment</span><span>3 Confirmation</span></div>
+        <div class="grid cols-2 checkout-layout">
+          <div class="card" id="checkout2Form"></div>
+          <div class="card" id="checkoutSummary2"></div>
+        </div>
+      </section>
+
+      <section id="checkout-3" class="view checkout-view">
+        <div class="checkout-steps"><span>1 Ticket details</span><span>2 Payment</span><span class="active">3 Confirmation</span></div>
+        <div id="confirmationWrap"></div>
+      </section>
+
+      <section id="login" class="view auth-wrap">
+        <div class="grid cols-2">
+          <div class="card">
+            <h2>Login</h2>
+            <form id="loginForm" class="stack">
+              <input name="email" type="email" placeholder="Email" required>
+              <input name="password" type="password" placeholder="Password" required>
+              <select name="role"><option value="customer">Customer</option><option value="organizer">Organizer</option></select>
+              <button class="btn btn-primary wide" type="submit">Login</button>
+            </form>
+            <div class="helper-list">
+              <small>Customer demo: demo@tilted.bw / demo123</small>
+              <small>Organizer demo: organizer@tilted.bw / org123</small>
+            </div>
+          </div>
+          <div class="card">
+            <h2>Register</h2>
+            <form id="registerForm" class="stack">
+              <input name="name" placeholder="Full name" required>
+              <input name="email" type="email" placeholder="Email" required>
+              <input name="phone" placeholder="Botswana phone e.g. +267 72 300 000" required>
+              <input name="nationalId" placeholder="Botswana ID" required>
+              <input name="password" type="password" placeholder="Password" required>
+              <button class="btn btn-secondary wide" type="submit">Create customer account</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="customer-dashboard" class="view">
+        <div class="section-header"><h2>Customer dashboard</h2><span id="customerHello" class="muted"></span></div>
+        <div class="grid cols-4 stats-grid" id="customerStats"></div>
+        <div class="grid cols-2">
+          <div class="card">
+            <div class="section-header"><h3>Upcoming tickets</h3><button class="text-btn" data-route-btn="my-tickets">Open My Tickets</button></div>
+            <div id="upcomingTickets"></div>
+          </div>
+          <div class="card">
+            <div class="section-header"><h3>Recent purchases</h3><button class="text-btn" data-route-btn="purchase-history">History</button></div>
+            <div id="recentOrders"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="my-tickets" class="view">
+        <div class="section-header"><h2>My tickets</h2><span class="muted">Every paid ticket appears here immediately.</span></div>
+        <div id="ticketsWrap" class="card-grid"></div>
+      </section>
+
+      <section id="purchase-history" class="view">
+        <div class="section-header"><h2>Purchase history</h2></div>
+        <div id="historyWrap" class="stack"></div>
+      </section>
+
+      <section id="organizer-portal" class="view">
+        <div class="grid cols-2">
+          <div class="card">
+            <span class="pill">For organizers</span>
+            <h2>Run your event from one dashboard</h2>
+            <p>Create events, manage tiers, track revenue, monitor attendance and validate tickets at the gate without a backend.</p>
+            <div class="helper-list">
+              <small data-tip="Service fees help cover ticket delivery, QR issuance and payment handling.">Service fee logic</small>
+              <small data-tip="Each ticket gets a unique code and can only be checked in once.">Fraud prevention</small>
+              <small data-tip="Orange Money and MyZaka matter because local buyers expect mobile-first payment options.">Botswana payment relevance</small>
+            </div>
+            <button class="btn btn-primary" data-route-btn="organizer-dashboard">Open dashboard</button>
+          </div>
+          <div class="card">
+            <h2>Organizer login</h2>
+            <p>Use the organizer demo account or switch via Demo Panel.</p>
+            <button class="btn btn-secondary" id="organizerQuickLogin">Login as organizer demo</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="organizer-dashboard" class="view">
+        <div class="section-header"><h2>Organizer dashboard</h2><div class="inline-actions"><button class="btn btn-secondary" data-route-btn="create-event">Create event</button><button class="btn btn-ghost" data-route-btn="sales-analytics">Analytics</button><button class="btn btn-ghost" data-route-btn="ticket-validation">Validate tickets</button></div></div>
+        <div id="organizerStats" class="grid cols-5 stats-grid"></div>
+        <div class="grid cols-2">
+          <div class="card"><div class="section-header"><h3>Your events</h3></div><div id="organizerEvents"></div></div>
+          <div class="card"><div class="section-header"><h3>Recent purchases</h3></div><div id="organizerRecent"></div></div>
+        </div>
+      </section>
+
+      <section id="create-event" class="view">
+        <div class="section-header"><h2>Create event</h2><span class="muted">This saves in browser storage and appears instantly.</span></div>
+        <form id="createEventForm" class="card stack">
+          <div class="grid cols-2">
+            <input name="title" placeholder="Event title" required>
+            <input name="organizerName" placeholder="Organizer name" required>
+            <input name="date" type="date" required>
+            <input name="time" type="time" required>
+            <input name="venue" placeholder="Venue" required>
+            <select name="city" required>
+              <option value="">Select city</option>
+              <option>Gaborone</option>
+              <option>Francistown</option>
+              <option>Maun</option>
+              <option>Palapye</option>
+              <option>Lobatse</option>
+              <option>Serowe</option>
+              <option>Selibe Phikwe</option>
+              <option>Molepolole</option>
+              <option>Kanye</option>
+              <option>Kasane</option>
+            </select>
+            <select name="category" required>
+              <option value="">Category</option>
+              <option>Music</option><option>Comedy</option><option>Campus</option><option>Sports</option><option>Theatre</option><option>Food</option><option>Business</option><option>Expo</option>
+            </select>
+            <input name="posterColor" type="color" value="#4f46e5">
+          </div>
+          <textarea name="description" rows="4" placeholder="Event description" required></textarea>
+          <div class="grid cols-3">
+            <input name="tierName" placeholder="Main tier name" value="General" required>
+            <input name="tierPrice" type="number" placeholder="Price" required>
+            <input name="tierQty" type="number" placeholder="Quantity" required>
+          </div>
+          <div class="grid cols-2">
+            <label class="switch-row"><span>Publish now</span><input name="publishNow" type="checkbox" checked></label>
+            <label class="switch-row"><span>Poster upload mock complete</span><input type="checkbox" checked disabled></label>
+          </div>
+          <button class="btn btn-primary" type="submit">Save event</button>
+        </form>
+      </section>
+
+      <section id="sales-analytics" class="view">
+        <div class="section-header"><h2>Sales analytics</h2></div>
+        <div id="analyticsWrap" class="grid cols-2"></div>
+      </section>
+
+      <section id="ticket-validation" class="view">
+        <div class="section-header"><h2>Ticket validation</h2><span class="muted">Simulate QR scan or enter a code manually.</span></div>
+        <div class="grid cols-2">
+          <div class="card stack">
+            <select id="validationEvent"></select>
+            <input id="validationCode" placeholder="Enter ticket code e.g. TT-ABC123">
+            <div class="inline-actions">
+              <button id="validateTicketBtn" class="btn btn-primary">Validate code</button>
+              <button id="scanLatestBtn" class="btn btn-secondary">Scan latest sold ticket</button>
+            </div>
+          </div>
+          <div class="card" id="validationResult"></div>
+        </div>
+      </section>
+
+      <section id="about" class="view">
+        <div class="card prose">
+          <span class="pill">ICT205 Entrepreneurship Project</span>
+          <h2>About Tilted Tickets</h2>
+          <p>Tilted Tickets is a Botswana-focused event ticketing platform for concerts, theatre, campus events, sports and conferences. The platform solves a measurable local problem: event discovery is scattered, ticket sales are manual, and gate validation with screenshots is trivially faked.</p>
+
+          <div class="grid cols-2" style="margin-top:20px">
+            <div>
+              <h3>Problem we are solving</h3>
+              <ul>
+                <li>No single trusted platform covers Botswana events across cities.</li>
+                <li>Organisers chase payments via WhatsApp and manage guest lists in Excel.</li>
+                <li>Screenshot tickets are impossible to validate reliably at the gate.</li>
+                <li>No local-payment-native checkout — most platforms default to foreign cards.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Our solution</h3>
+              <ul>
+                <li>One platform for buyers to discover and book events across Gaborone, Francistown, Maun and beyond.</li>
+                <li>Orange Money and MyZaka at checkout — no foreign card required.</li>
+                <li>Unique QR codes per attendee, validated once and invalidated on scan.</li>
+                <li>Organisers get a real-time dashboard, attendee export, and gate check-in tool.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px">Revenue model</h3>
+          <div class="rev-model">
+            <div class="rev-card"><strong>7%</strong><span>Service fee per ticket</span></div>
+            <div class="rev-card"><strong>3%</strong><span>Transaction fee per ticket</span></div>
+            <div class="rev-card"><strong>90%</strong><span>Paid to the organiser</span></div>
+          </div>
+          <p class="muted">At 500 tickets sold at BWP 250 each, Tilted Tickets earns BWP 12,500 in fees. Scale to 10,000 tickets and the model is self-sustaining. Premium organiser tiers and sponsored event placement are additional revenue streams at scale.</p>
+
+          <h3 style="margin-top:24px">Competitive landscape</h3>
+          <table class="compare-table">
+            <thead><tr><th>Feature</th><th>Tilted Tickets</th><th>Webtickets.co.bw</th><th>Manual (WhatsApp)</th></tr></thead>
+            <tbody>
+              <tr><td>Botswana-native payments</td><td class="win">✓ Orange Money, MyZaka</td><td class="lose">Limited</td><td class="lose">Cash only</td></tr>
+              <tr><td>QR gate validation</td><td class="win">✓ Unique per attendee</td><td class="lose">Partial</td><td class="lose">✗</td></tr>
+              <tr><td>Organiser self-service</td><td class="win">✓ Full dashboard</td><td class="lose">Managed service</td><td class="lose">✗</td></tr>
+              <tr><td>Free to set up</td><td class="win">✓ Commission only</td><td class="lose">Setup fees apply</td><td class="win">✓</td></tr>
+              <tr><td>Real-time analytics</td><td class="win">✓ Live metrics</td><td class="lose">Basic reports</td><td class="lose">✗</td></tr>
+              <tr><td>Campus event support</td><td class="win">✓ Free tier available</td><td class="lose">✗</td><td class="win">✓ informal</td></tr>
+            </tbody>
+          </table>
+
+          <h3 style="margin-top:24px">Go-to-market plan</h3>
+          <ul>
+            <li><strong>Phase 1 (now):</strong> Prototype and academic validation. Onboard 3–5 Gaborone event organisers as pilot partners.</li>
+            <li><strong>Phase 2 (6 months):</strong> Live Orange Money and MyZaka API integration. Launch on GitHub Pages with real payment rails.</li>
+            <li><strong>Phase 3 (12 months):</strong> Expand to Francistown and Maun. Add mobile app wrapper. Target 50,000 annual tickets processed.</li>
+          </ul>
+        </div>
+      </section>
+
+      <aside id="demoPanel" class="demo-panel">
+        <div class="demo-head">
+          <h3>Demo Panel</h3>
+          <button id="demoToggle" class="btn btn-ghost">Hide</button>
+        </div>
+        <div class="stack">
+          <button class="btn btn-secondary wide" id="autofillCheckoutBtn">Autofill checkout</button>
+          <button class="btn btn-secondary wide" id="simulatePurchaseBtn">Simulate customer purchase</button>
+          <button class="btn btn-secondary wide" id="jumpCustomerBtn">Jump to customer mode</button>
+          <button class="btn btn-secondary wide" id="jumpOrganizerBtn">Jump to organizer mode</button>
+          <button class="btn btn-secondary wide" id="forceSuccessBtn">Force payment success</button>
+          <button class="btn btn-secondary wide" id="forceFailureBtn">Force payment failure</button>
+          <button class="btn btn-secondary wide" id="soldOutBtn">Simulate sold out</button>
+          <button class="btn btn-danger wide" id="resetDemoBtn">Reset demo data</button>
+          <p class="demo-note">Business logic notes: service fee = 7%, transaction fee = 3%, promo code TILTED2026 = 15% off. Validation checks code existence, event match and used status.</p>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>ICT205 Entrepreneurship Project | Botswana Accountancy College | 2026</span>
+      <span id="storageStatus">Browser storage ready</span>
+    </footer>
+  </div>
+
+  <div id="toastContainer"></div>
+  <div id="ticketModal" class="modal hidden"><div class="modal-card"><button id="closeModal" class="modal-close">×</button><div id="modalBody"></div></div></div>
+  <script src="script.js"></script>
+</body>
+</html>
