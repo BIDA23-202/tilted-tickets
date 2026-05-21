@@ -17,12 +17,9 @@ Organizers create events, track sales, and validate tickets at the gate.
 
 ## Live demo
 
-**GitHub Pages URL:** `https://YOUR-USERNAME.github.io/tilted-tickets/`
+**GitHub Pages URL:** `https://BIDA23-202.github.io/tilted-tickets/`
 
 > Reset demo data in the Demo Panel the first time you load after updating files — this clears old localStorage and loads the new 14-event seed.
-
-*(Replace YOUR-USERNAME with your actual GitHub username after upload)*
-
 ---
 
 ## How to run locally
@@ -131,7 +128,7 @@ That is the only manual step. Everything after this is automatic.
 ```bash
 # 1. Clone or init
 git init
-git remote add origin https://github.com/YOUR-USERNAME/tilted-tickets.git
+git remote add origin https://github.com/BIDA23-202/tilted-tickets.git
 
 # 2. Stage everything
 git add .
@@ -224,4 +221,7 @@ Go to https://github.com and sign up if you do not have an account.
 
 ---
 
-*Built with Tilted Tickets — Botswana's Smartest Way to Event*
+**Built with Tilted Tickets — Botswana's Smartest Way to Event**
+
+THANK YOU.
+~SHEWABO JONATHAN ZIKHALI
