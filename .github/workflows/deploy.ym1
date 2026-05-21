@@ -1,0 +1,5 @@
+
+git remote add origin https://github.com/BIDA23-202/tilted-tickets.git
+git add .
+git commit -m "Initial deploy: Tilted Tickets v1"
+git push -u origin main
