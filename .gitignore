@@ -3,12 +3,8 @@ Thumbs.db
 desktop.ini
 *.log
 *.tmp
-*.bak
-*.swp
 .env
-.env.local
-node_modules/
 .vscode/
 .idea/
+node_modules/
 *.zip
-*.tar.gz
